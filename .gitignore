@@ -1,9 +1,6 @@
 .vscode
 ./backend/app/.env
 
-
-
-
 # Editors
 .vscode/
 .idea/
