@@ -1,5 +1,5 @@
 .vscode
-backend/app/.env
+./backend/app/.env
 
 
 
