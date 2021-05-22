@@ -1,6 +1,6 @@
 .vscode
 ./backend/app/.env
-
+*node_modules
 # Editors
 .vscode/
 .idea/
