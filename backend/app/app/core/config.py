@@ -33,3 +33,7 @@ conf = ConnectionConfig(
     USE_CREDENTIALS=True
 )
 
+# Cors origins
+origins = [
+    "*"
+]

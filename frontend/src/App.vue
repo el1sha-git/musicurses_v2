@@ -1,30 +1,40 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  <Navbar></Navbar>
   <router-view/>
 </template>
 
+<script>
+import Navbar from '../src/components/nav.vue'
+export default {
+  components:{
+    Navbar
+  }
+}
+</script>
+
 <style>
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap');
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: rgb(211, 211, 211);
 }
-
-#nav {
-  padding: 30px;
+*{
+  padding: 0;
+  margin: 0;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.main_container{
+  width:90%;
+  display: flex;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+a{
+  outline: none;
+  text-decoration: none;
+  color: rgb(211, 211, 211);
+}
+body{
+  background: #1c1c1c;
 }
 </style>
