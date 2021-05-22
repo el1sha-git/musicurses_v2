@@ -6,6 +6,12 @@ name = "pypi"
 [packages]
 fastapi = {extras = ["all"], version = "*"}
 alembic = {extras = ["all"], version = "*"}
+databases = {extras = ["postgresql"], version = "*"}
+sqlalchemy = "*"
+psycopg2-binary = "*"
+fastapi-users = {extras = ["sqlalchemy"], version = "*"}
+fastapi-mail = "*"
+graphene = "*"
 
 [dev-packages]
 
