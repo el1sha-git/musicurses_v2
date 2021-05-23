@@ -1,13 +1,16 @@
 <template>
   <Navbar></Navbar>
   <router-view/>
+  <Audio_player></Audio_player>
 </template>
 
 <script>
 import Navbar from '../src/components/nav.vue'
+import Audio_player from '../src/components/audio_player'
 export default {
   components:{
-    Navbar
+    Navbar,
+    Audio_player
   }
 }
 </script>
