@@ -1,14 +1,22 @@
 <template>
     <div class="audio_player">
+        <div class="progress_bar" v-on:click="force_update_time">
+            <p class="time">{{ current_time_str }}</p>
+            <div v-bind:style="{width: progress_bar_width + 'px'}" class="progress_now"></div>
+        </div>
+        <audio v-bind:ontimeupdate="current_time_update" 
+        src="https://s241man.storage.yandex.net/get-mp3/ff2db51a362b9366e9a1a976088410d8/0005c43d6b360809/rmusic/U2FsdGVkX183880R7fhGpe89YzUWno0Hx37heDjo8MtxzVtAZbDj8ksJo8iyfTzsFqQOhr-2Rs-9YFAXVqjBRm5vInEY9CdKvMJhdvAf8wY/7e2c7d785a2932e426538762081bdc3f7bc13b0988f9e28fea6aa47ff0501cae/25459?track-id=57042975&play=false"
+        >
+        </audio>
         <div class="main_container">
             <div class="audio__controls">
                 <span class="fa fa-backward"></span>
-                <span v-if="!playing" class="fa fa-play" v-on:click="play"></span>
+                <span id="play" v-if="!$store.state.audio_status" class="fa fa-play" v-on:click="play"></span>
                 <span v-else class="fa fa-pause" v-on:click="play"></span>
                 <span class="fa fa-forward"></span>
             </div>
             <div class="audio__avatar">
-                <img src="../assets/song.png" alt="">
+                <img src="" alt="">
             </div>
             <div class="audio__title_events_wrapper">
                 <div class="audio__song_title">
@@ -34,62 +42,119 @@ export default {
         
     },
     mounted() {
-        this.audio_element = document.querySelector('audio');
-        this.track = this.audio_context.createMediaElementSource(this.audio_element);
-        this.track.connect(this.audio_context.destination);
- 
+        let player = document.querySelector('audio')
+        this.$store.commit('create_player', player)
+        this.audio_element = player;
     },
     data() {
         return {
-            audio_context: window.AudioContext || window.webkitAudioContext,
-            audio_element: undefined,
-            gain: null,
-            track: undefined,
-            playing: false
+            current_time: 0,
+            current_time_str: '',
+            progress_bar_width: 0,
         }
     },
     methods: {
+        
         play(){
-
-            if (this.audio_context.state === 'suspended') {
-                this.audio_context.resume();
-            }
-
-            if (this.playing === false){
-                this.audio_element.play()
-                this.playing = true
+            console.log(this.audio_element)
+            if (this.$store.state.audio_status){
+                this.audio_element.pause();
+                this.$store.commit('change_audio_state', false)
             }else{
-                this.audio_element.pause()
-                this.playing = false
+                // this.audio_element.play()
+                this.$store.state.audio_element.play()
+                this.audio_element.volume = 0.2
+                this.$store.commit('change_audio_state', true)
             }
         },
-        change_volume(){
-            const gainNode = this.audio_context.createGain();
-            this.track.connect(gainNode).connect(this.audio_context.destination);
-            const volumeControl = document.querySelector('#volume');
-            this.gain.gain.value = volumeControl.value;
+        current_time_update(){
+            // Упадет если будет больше часа!!!
+            this.current_time = this.$store.state.audio_element.currentTime
+            let minutes = Math.floor(this.current_time / 60) 
+            
+            if (minutes < 10){
+                minutes = '0'+minutes
+            }
+            let seconds = this.current_time - 60 * minutes
+            if (seconds < 10){
+                seconds = '0'+seconds
+
+            }
+            this.current_time_str = minutes+":"+seconds.toString().split('.')[0]
+            this.update_progress_bar()
+        },
+        update_progress_bar(){
+            let duration = this.$store.state.audio_element.duration
+            let current_time = this.$store.state.audio_element.currentTime
+            let screen_width = window.screen.width
+            this.progress_bar_width = current_time / duration * screen_width
+        },
+        force_update_time(){
+            let mouse_x = window.event.offsetX
+            let screen_width = window.screen.width
+            let duration = this.$store.state.audio_element.duration 
+
+            this.$store.state.audio_element.currentTime  = mouse_x / screen_width * duration
+
+            this.progress_bar_width = mouse_x / screen_width * screen_width
         }
         
     },
+    computed:{
+        
+    }
 }
 </script>
 
 
 <style scoped>
 .audio_player{
-    height: 70px;
+    height: 90px;
     width: 100%;
-    border-top: 2px solid white;
     position: fixed;
     bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
+
+.progress_bar{
+    width: 100%;
+    background-color: #242424;
+    border-bottom: 1px solid grey;
+    height: 20px;
+}
+.progress_bar::selection{
+    color: inherit;
+    background-color: inherit;
+}
+.progress_bar:hover{
+    cursor: pointer;
+}
+.time{
+    position: absolute;
+    z-index: 9999;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+.progress_now{
+    width: 50%;
+    height: 20px;
+    background-color: #cd5334;
+    position: absolute;
+    z-index: 8888;
+    transition: .3s;
+}
+
 
 .main_container{
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
+    margin-top:10px;
 }
 
 .audio__avatar{
