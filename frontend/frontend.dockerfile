@@ -1,12 +1,22 @@
-FROM node:14.15.4-alpine3.10
+FROM node:lts-alpine
 
+# устанавливаем простой HTTP-сервер для статики
+RUN npm install -g http-server
+
+# делаем каталог 'app' текущим рабочим каталогом
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+# копируем оба 'package.json' и 'package-lock.json' (если есть)
+COPY package*.json /app/
 
-COPY package.json package-lock.json /app/
-
+# устанавливаем зависимости проекта
 RUN npm install
 
-COPY public/ src/ /app/
+# копируем файлы и каталоги проекта в текущий рабочий каталог (т.е. в каталог 'app')
+COPY . .
+
+# собираем приложение для production с минификацией
+RUN npm run build
+
+EXPOSE 8080
+CMD [ "http-server", "dist" ]
