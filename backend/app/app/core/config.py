@@ -35,5 +35,5 @@ conf = ConnectionConfig(
 
 # Cors origins
 origins = [
-    "*"
+    "http://localhost:8080"
 ]

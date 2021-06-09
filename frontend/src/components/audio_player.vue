@@ -5,7 +5,7 @@
             <div v-bind:style="{width: progress_bar_width + 'px'}" class="progress_now"></div>
         </div>
         <audio v-bind:ontimeupdate="current_time_update" 
-        src="https://s241man.storage.yandex.net/get-mp3/ff2db51a362b9366e9a1a976088410d8/0005c43d6b360809/rmusic/U2FsdGVkX183880R7fhGpe89YzUWno0Hx37heDjo8MtxzVtAZbDj8ksJo8iyfTzsFqQOhr-2Rs-9YFAXVqjBRm5vInEY9CdKvMJhdvAf8wY/7e2c7d785a2932e426538762081bdc3f7bc13b0988f9e28fea6aa47ff0501cae/25459?track-id=57042975&play=false"
+        src="http://localhost:8000/api/song/song"
         >
         </audio>
         <div class="main_container">

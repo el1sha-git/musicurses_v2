@@ -5,7 +5,7 @@
             <div class="navbar__menu">
                 <router-link class="navbar__link" to="account"><span class="fa fa-user-circle-o"></span></router-link>
                 <router-link class="navbar__link" to="learning">Учиться</router-link>
-                <router-link class="navbar__link" to="learning">Поиск</router-link>
+                <router-link class="navbar__link" to="search">Поиск</router-link>
             </div>
         </div>
     </div>
@@ -20,11 +20,15 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap');
 .navbar{
+    position: sticky;
+    top: 0;
     width: 100%;
     height: 70px;
     display: flex;
     justify-content: center;
     border-bottom: 2px solid rgb(211, 211, 211);
+    background-color: #242424;
+    box-shadow: 0px 1px 5px 1px rgba(240, 240, 240, 0.5);
     }
 /* Main declare in App.vue */
 .main_container{

@@ -12,6 +12,10 @@ psycopg2-binary = "*"
 fastapi-users = {extras = ["sqlalchemy"], version = "*"}
 fastapi-mail = "*"
 graphene = "*"
+aiofiles = "*"
+python-slugify = {extras = ["unidecode"], version = "*"}
+transliterate = "*"
+pydantic = "*"
 
 [dev-packages]
 

@@ -11,3 +11,4 @@ def get_db() -> Generator:
         db.close()
 
 get_current_active_user = backends.fastapi_users.get_current_active_user
+current_user = backends.fastapi_users.current_user
