@@ -53,5 +53,5 @@ async def get_all_songs(db: Session = Depends(get_db)):
 
 @router.get("/song")
 async def get_all_songs():
-    return FileResponse('app/data/songs/satisfy.mp3')
+    return FileResponse('app/data/songs/sterfania.mp3')
 
