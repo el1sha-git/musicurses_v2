@@ -18,6 +18,15 @@ export default createStore({
     },
     change_audio_state(state, status){
       state.audio_status = status
+    },
+
+    change_song(state, payload){
+      state.audio_element.pause();
+      state.audio_element.currentTime = 0;
+      state.audio_element.src = state.backend_url + "/api/song?path=" + payload.url;
+      state.audio_id = payload.audio_id
+      state.audio_element.play()
+      state.audio_status = true
     }
   },
   actions: {

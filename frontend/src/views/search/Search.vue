@@ -9,7 +9,7 @@
                     Результаты поиска
                 </div>
                 <div v-for="i in data" v-bind:key="i.id" class="song">
-                    <span class="fa fa-play-circle song_play_button_small"></span>
+                    <span v-on:click="play(i.id, i.path)" class="fa fa-play-circle song_play_button_small"></span>
                     <p>{{ i.title }}</p>
                 </div>
             </div>
@@ -43,6 +43,9 @@ export default {
             await axios.get('http://localhost:8000/api/search/get_similar?text='+this.search_input).then(res=>{
                 console.log(res.data)
             })
+        },
+        play(id, path){
+            this.$store.commit('change_song', { audio_id: id, url: path })
         }
     },
 }
